@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 
 namespace VendingMachine
 {
@@ -11,7 +9,7 @@ namespace VendingMachine
         {
             Balance = 0;
             SelectedProduct = string.Empty;
-            Products = new Dictionary<string, decimal>()
+            _products = new Dictionary<string, decimal>()
             {
                 {"Coke", 25.0M },
                 {"Pepsi", 35.0M },
@@ -25,7 +23,7 @@ namespace VendingMachine
         private decimal Balance { get; set;  }
         private string SelectedProduct { get; set; }
 
-        private Dictionary<string, decimal> Products;
+        private readonly Dictionary<string, decimal> _products;
 
         public  decimal GetBalance()
         {
@@ -48,10 +46,7 @@ namespace VendingMachine
                     break;
                 default:
                     throw new InvalidOperationException("Invalid value");
-
             }
-
-            
         }
 
         public  string GetSelectedProduct()
@@ -61,7 +56,7 @@ namespace VendingMachine
 
         public void SelectProduct(string name)
         {
-            if (Products.ContainsKey(name))
+            if (_products.ContainsKey(name))
             {
                 SelectedProduct = name;
             }
@@ -81,9 +76,9 @@ namespace VendingMachine
 
         public  Tuple<string, decimal> Purchase()
         {
-            if(Balance < Products[SelectedProduct])
+            if(Balance < _products[SelectedProduct])
                 throw new InvalidOperationException("Insufficient balance to purchase selected product.");
-            var change = Balance - Products[SelectedProduct];
+            var change = Balance - _products[SelectedProduct];
             var result =  new Tuple<string, decimal>(SelectedProduct, change);
             Balance = 0;
             SelectedProduct = string.Empty;

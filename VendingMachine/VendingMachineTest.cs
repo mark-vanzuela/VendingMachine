@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Security.Cryptography;
 using NUnit.Framework;
 
 namespace VendingMachine
@@ -39,7 +37,6 @@ namespace VendingMachine
             machine.AddCash(expected);
 
             Assert.AreEqual(expected, machine.GetBalance());
-
         }
 
         [TestCase(500.0)]
@@ -109,12 +106,11 @@ namespace VendingMachine
             machine.AddCash(cash1);
             machine.AddCash(cash2);
             machine.SelectProduct(product);
-            var totalCash = cash1 + cash2;
+            
+            var (item1, item2) = machine.Purchase();
 
-            var result = machine.Purchase();
-
-            Assert.AreEqual(change, result.Item2);
-            Assert.AreEqual(product, result.Item1);
+            Assert.AreEqual(change, item2);
+            Assert.AreEqual(product, item1);
             Assert.AreEqual(0, machine.GetBalance());
             Assert.IsEmpty(machine.GetSelectedProduct());
         }
