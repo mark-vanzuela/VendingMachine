@@ -126,12 +126,12 @@ namespace VendingMachine
             machine.AddCash(10);
             machine.SelectProduct("Coke");
 
-            Assert.Throws<InvalidOperationException>(() =>
+            var ex = Assert.Throws<InvalidOperationException>(() =>
             {
                 var result = machine.Purchase();
-            })
-                ;
+            });
            
+            Assert.That(ex.Message, Is.EqualTo("Insufficient balance to purchase selected product."));
         }
     }
 }

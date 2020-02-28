@@ -82,7 +82,7 @@ namespace VendingMachine
         public  Tuple<string, decimal> Purchase()
         {
             if(Balance < Products[SelectedProduct])
-                throw new InvalidOperationException($"Insufficient balance to purchase selected {SelectedProduct}");
+                throw new InvalidOperationException("Insufficient balance to purchase selected product.");
             var change = Balance - Products[SelectedProduct];
             var result =  new Tuple<string, decimal>(SelectedProduct, change);
             Balance = 0;
