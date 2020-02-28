@@ -6,7 +6,25 @@ namespace VendingMachine
 {
     public class VendingMachine
     {
+        public VendingMachine()
+        {
+            Balance = 0;
+            SelectedProduct = string.Empty;
+            Products = new Dictionary<string, decimal>()
+            {
+                {"Coke", 25.0M },
+                {"Pepsi", 35.0M },
+                {"Soda", 45.0M },
+                {"ChocolateBar", 20.25M },
+                {"ChewingGum", 10.50M },
+                {"BottledWater", 15.0M },
+            };
+        }
+
         private decimal Balance { get; set;  }
+        private string SelectedProduct { get; set; }
+
+        private Dictionary<string, decimal> Products;
 
         public  decimal GetBalance()
         {
@@ -33,6 +51,23 @@ namespace VendingMachine
             }
 
             
+        }
+
+        public  string GetSelectedProduct()
+        {
+            return SelectedProduct;
+        }
+
+        public void SelectProduct(string name)
+        {
+            if (Products.ContainsKey(name))
+            {
+                SelectedProduct = name;
+            }
+            else
+            {
+                throw new InvalidOperationException("Invalid Product");
+            }
         }
     }
 }

@@ -15,6 +15,14 @@ namespace VendingMachine
             Assert.AreEqual(0, machine.GetBalance());
         }
 
+        [Test]
+        public void WhenVendingMachineStarts_ThenSelectedProductIsEmpty()
+        {
+            var machine = new VendingMachine();
+
+            Assert.IsEmpty(machine.GetSelectedProduct());
+        }
+
         [TestCase(100.0)]
         [TestCase(50.0)]
         [TestCase(20.0)]
@@ -43,6 +51,34 @@ namespace VendingMachine
             {
                 var machine = new VendingMachine();
                 machine.AddCash(expected);
+            });
+        }
+
+        [TestCase("Coke")]
+        [TestCase("Pepsi")]
+        [TestCase("Soda")]
+        [TestCase("ChocolateBar")]
+        [TestCase("ChewingGum")]
+        [TestCase("BottledWater")]
+        public void WhenSelectingProduct_ThenItCanOnlySelect_Coke_Pepsi_Soda_ChocolateBar_ChewingGum_BottledWater(string expected)
+        {
+            var machine = new VendingMachine();
+
+            machine.SelectProduct(expected);
+
+            Assert.AreEqual(expected, machine.GetSelectedProduct());
+        }
+
+        [TestCase("Sprite")]
+        [TestCase("Royal")]
+        [TestCase("NatureSpring")]
+        [TestCase("JuicyFruit")]
+        public void WhenAddingInvalidCashAmount_ThenItShouldThrowException(string expected)
+        {
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                var machine = new VendingMachine();
+                machine.SelectProduct(expected);
             });
         }
     }
