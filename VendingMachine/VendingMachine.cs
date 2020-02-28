@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace VendingMachine
@@ -68,6 +69,25 @@ namespace VendingMachine
             {
                 throw new InvalidOperationException("Invalid Product");
             }
+        }
+
+        public decimal Refund()
+        {
+            var refund = Balance;
+            Balance = 0;
+            SelectedProduct = string.Empty;
+            return refund;
+        }
+
+        public  Tuple<string, decimal> Purchase()
+        {
+            if(Balance < Products[SelectedProduct])
+                throw new InvalidOperationException($"Insufficient balance to purchase selected {SelectedProduct}");
+            var change = Balance - Products[SelectedProduct];
+            var result =  new Tuple<string, decimal>(SelectedProduct, change);
+            Balance = 0;
+            SelectedProduct = string.Empty;
+            return result;
         }
     }
 }
