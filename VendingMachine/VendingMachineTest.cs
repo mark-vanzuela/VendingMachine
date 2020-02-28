@@ -84,7 +84,7 @@ namespace VendingMachine
         public void WhenUserCancelledRequest_ThenItShouldReturnRefundAndResetMachine()
         {
             var machine = new VendingMachine();
-            var amount = 100.0M;
+            const decimal amount = 100.0M;
             machine.AddCash(amount);
 
             var result = machine.Refund();
